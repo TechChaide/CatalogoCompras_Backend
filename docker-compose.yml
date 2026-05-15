@@ -1,0 +1,28 @@
+services:
+  catalogo-compras-backend-service:
+    build: . # <-- AÑADE ESTA LÍNEA
+    image: techchaide/catalogo-compras-backend:1.0
+    container_name: catalogo_compras_backend_service
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      - TZ=America/Guayaquil
+    networks:
+      - traefik-net
+    volumes:
+      - /usr/share/zoneinfo/America/Guayaquil:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    labels:
+      # ... tus labels de Traefik se mantienen igual ...
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-net"
+      - "traefik.http.routers.catalogo-compras-backend-prod.rule=Host(`apps.chaide.com`) && PathPrefix(`/catalogoComprasBA`)"
+      - "traefik.http.routers.catalogo-compras-backend-prod.entrypoints=websecure"
+      - "traefik.http.routers.catalogo-compras-backend-prod.tls=true"
+      - "traefik.http.middlewares.prod-catalogo-compras-backend-strip.stripprefix.prefixes=/catalogoComprasBA"
+      - "traefik.http.routers.catalogo-compras-backend-prod.middlewares=prod-catalogo-compras-backend-strip@docker"
+      - "traefik.http.services.catalogo-compras-backend-prod.loadbalancer.server.port=5400"
+networks:
+  traefik-net:
+    external: true
