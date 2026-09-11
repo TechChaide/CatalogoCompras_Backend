@@ -29,7 +29,7 @@ const sequelize = new Sequelize({
     },
     
     // Logging
-    logging: process.env.NODE_ENV === 'development' ? console.log : false,
+    logging: false,
     
     // Sync options
     sync: {

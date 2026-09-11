@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Tipo_caracteristicaController = require('../controllers/tipo_caracteristica.controller');
+const { verifyToken } = require('../middlewares/auth.middleware');
 
-// CRUD Endpoints
+router.use(verifyToken);// CRUD Endpoints
 router.get('/', Tipo_caracteristicaController.getAll);
 router.post('/', Tipo_caracteristicaController.createOrUpdate);
 router.get('/:id', Tipo_caracteristicaController.getById);

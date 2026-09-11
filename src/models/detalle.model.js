@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
         },
         
         fecha_modificacion: {
-            type: DataTypes.DATE
+            type: DataTypes.STRING
         },
         
         usuario_modificacion: {
@@ -27,6 +27,9 @@ module.exports = (sequelize) => {
         },
         
         codigo_tipo_caracteristica: {
+            type: DataTypes.INTEGER
+        },
+        orden: {
             type: DataTypes.INTEGER
         }
         

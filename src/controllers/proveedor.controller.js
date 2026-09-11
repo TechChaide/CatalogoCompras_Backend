@@ -73,7 +73,7 @@ module.exports = {
     // Get all records
     getAll: async (req, res) => {
         try {
-            const { page = 1, limit = 50 } = req.query;
+            const { page = 1, limit = 100 } = req.query;
             const offset = (page - 1) * limit;
 
             const { count, rows } = await Proveedor.findAndCountAll({
@@ -128,7 +128,7 @@ module.exports = {
             }
 
             // Soft delete by setting status
-            record.estado = 'INACTIVE';
+            record.estado = 'I';
             await record.save();
 
             return res.status(200).json({

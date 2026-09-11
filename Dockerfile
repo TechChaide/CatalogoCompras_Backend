@@ -25,8 +25,8 @@ EXPOSE 5400
 # Copia el script de inicio al contenedor
 COPY entrypoint.sh .
 
-# Dale permisos de ejecución al script
-RUN chmod +x ./entrypoint.sh
+# Eliminar posibles saltos de línea de Windows (CRLF) y dar permisos de ejecución
+RUN sed -i 's/\r$//' ./entrypoint.sh && chmod +x ./entrypoint.sh
 
 # Establece el script como el comando a ejecutar al iniciar el contenedor
 CMD ["./entrypoint.sh"]

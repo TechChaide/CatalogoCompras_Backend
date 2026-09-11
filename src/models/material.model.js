@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
         },
         
         fecha_creacion: {
-            type: DataTypes.DATE
+            type: DataTypes.STRING
         },
         
         usuario_creacion: {
@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
         },
         
         fecha_modificacion: {
-            type: DataTypes.DATE
+            type: DataTypes.STRING
         },
         
         usuario_modificacion: {

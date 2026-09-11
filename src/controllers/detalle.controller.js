@@ -8,6 +8,7 @@ module.exports = {
             const {
                 codigo_detalle,
                 estado,
+                orden,
                 fecha_modificacion,
                 usuario_modificacion,
                 codigo_familia_material,
@@ -20,6 +21,7 @@ module.exports = {
                 // Create new record
                 const newRecord = await Detalle.create({
                     estado: estado,
+                    orden: orden,
                     fecha_modificacion: fecha_modificacion,
                     usuario_modificacion: usuario_modificacion,
                     codigo_familia_material: codigo_familia_material,
@@ -52,6 +54,7 @@ module.exports = {
 
                 // Update fields
                 if (estado !== undefined) record.estado = estado;
+                if (orden !== undefined) record.orden = orden;
                 if (fecha_modificacion !== undefined) record.fecha_modificacion = fecha_modificacion;
                 if (usuario_modificacion !== undefined) record.usuario_modificacion = usuario_modificacion;
                 if (codigo_familia_material !== undefined) record.codigo_familia_material = codigo_familia_material;
@@ -79,7 +82,7 @@ module.exports = {
     // Get all records
     getAll: async (req, res) => {
         try {
-            const { page = 1, limit = 50 } = req.query;
+            const { page = 1, limit  = 10000 } = req.query;
             const offset = (page - 1) * limit;
 
             const { count, rows } = await Detalle.findAndCountAll({
@@ -143,7 +146,7 @@ module.exports = {
             }
 
             // Soft delete by setting status
-            record.estado = 'INACTIVE';
+            record.estado = 'I';
             await record.save();
 
             return res.status(200).json({
@@ -153,5 +156,27 @@ module.exports = {
         } catch (error) {
             handleError(res, error, 'Error deactivating record');
         }
-    }
+    },
+
+    getByTipoFamiliaMaterial: async (req, res) => {
+        try {
+            const { codigo_familia_material } = req.body;
+
+            const records = await Detalle.findAll({
+                where: { codigo_familia_material: codigo_familia_material, estado: 'A' },
+                include: [
+                    { model: Familia_material, as: 'familia_material' },
+                    { model: Tipo_caracteristica, as: 'tipo_caracteristica' }
+                ]
+            });
+
+            return res.status(200).json({
+                data: records,
+                length: records.length
+            });
+        } catch (error) {
+            handleError(res, error, 'Error fetching records by tipo and familia material');
+        }
+    },
+
 };
