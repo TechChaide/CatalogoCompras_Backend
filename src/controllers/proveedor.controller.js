@@ -14,7 +14,8 @@ module.exports = {
                 telefono_proveedor,
                 estado,
                 fecha_modificacion,
-                usuario_modificacion
+                usuario_modificacion,
+                codigosap_proveedor
             } = req.body;
 
             // Validate required fields
@@ -29,7 +30,8 @@ module.exports = {
                     telefono_proveedor: telefono_proveedor,
                     estado: estado,
                     fecha_modificacion: fecha_modificacion,
-                    usuario_modificacion: usuario_modificacion
+                    usuario_modificacion: usuario_modificacion,
+                    codigosap_proveedor: codigosap_proveedor
                 });
 
                 const response = await Proveedor.findByPk(newRecord.codigo_proveedor);
@@ -55,6 +57,7 @@ module.exports = {
                 if (estado !== undefined) record.estado = estado;
                 if (fecha_modificacion !== undefined) record.fecha_modificacion = fecha_modificacion;
                 if (usuario_modificacion !== undefined) record.usuario_modificacion = usuario_modificacion;
+                if (codigosap_proveedor !== undefined) record.codigosap_proveedor = codigosap_proveedor;
                 
                 await record.save();
 

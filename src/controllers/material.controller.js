@@ -16,7 +16,8 @@ module.exports = {
                 fecha_creacion,
                 usuario_creacion,
                 fecha_modificacion,
-                usuario_modificacion
+                usuario_modificacion,
+                estado_material
             } = req.body;
 
             // Validate required fields
@@ -33,7 +34,8 @@ module.exports = {
                     fecha_creacion: fecha_creacion,
                     usuario_creacion: usuario_creacion,
                     fecha_modificacion: fecha_modificacion,
-                    usuario_modificacion: usuario_modificacion
+                    usuario_modificacion: usuario_modificacion,
+                    estado_material: estado_material
                 });
 
                 const response = await Material.findByPk(newRecord.codigo_material, {
@@ -71,6 +73,7 @@ module.exports = {
                 if (usuario_creacion !== undefined) record.usuario_creacion = usuario_creacion;
                 if (fecha_modificacion !== undefined) record.fecha_modificacion = fecha_modificacion;
                 if (usuario_modificacion !== undefined) record.usuario_modificacion = usuario_modificacion;
+                if (estado_material !== undefined) record.estado_material = estado_material;
                 
                 await record.save();
 

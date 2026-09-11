@@ -48,6 +48,10 @@ module.exports = (sequelize) => {
         
         usuario_modificacion: {
             type: DataTypes.STRING
+        },
+        
+        estado_material: {
+            type: DataTypes.STRING
         }
         
     }, {

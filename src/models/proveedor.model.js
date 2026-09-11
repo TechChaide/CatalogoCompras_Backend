@@ -40,6 +40,10 @@ module.exports = (sequelize) => {
         
         usuario_modificacion: {
             type: DataTypes.STRING
+        },
+        
+        codigosap_proveedor: {
+            type: DataTypes.STRING
         }
         
     }, {
